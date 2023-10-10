@@ -5,7 +5,7 @@ import tiktoken
 import secrets
 import openai
 from flask import Flask, redirect, render_template, request, url_for, session
-from pdf_to_string import pdf_to_string
+from pdf_to_string import pdf_to_string, compress_outline
 
 import datetime
 import os.path
@@ -31,11 +31,11 @@ For example, the sample text in single quotations “Monday Sept 11 @ Noon Deliv
 """
 #need to get course outline from pdf
 
-pdf_file = "preliminary_Chem_1301A_2023_course_outline.pdf"  # Replace with the path to your PDF file
-course_outline = pdf_to_string(pdf_file)
+pdf_file = "Outline2.pdf"  # Replace with the path to your PDF file
+course_outline = compress_outline(pdf_to_string(pdf_file))
 
 def generate_prompt():
-    return prompt + course_outline
+    return prompt + '"' + course_outline + '"'
 
 
 testDueDates = """Pass 1:
@@ -101,20 +101,21 @@ Final Output:
 
 @app.route("/", methods=("GET", "POST"))
 def index():
-    session['due_dates'] = testDueDates
+    # session['due_dates'] = testDueDates
+    print(generate_prompt())
+    print(str(len(enc.encode(generate_prompt()))))
+    # if request.method == "POST":
+    #     response = openai.Completion.create(
+    #         model="text-davinci-003",
+    #         prompt=generate_prompt(),
+    #         temperature=0.6,
+    #         max_tokens = 4096 - len(enc.encode(generate_prompt())) #problem is that if we dont have a max token, the response will only be one line
+    #     )
+    #     session['due_dates'] = response.choices[0].text
+    #     return redirect(url_for("index", result=response.choices[0].text))
 
-    if request.method == "POST":
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=generate_prompt(),
-            temperature=0.6,
-            max_tokens = 4096 - len(enc.encode(generate_prompt())) #problem is that if we dont have a max token, the response will only be one line
-        )
-        session['due_dates'] = response.choices[0].text
-        return redirect(url_for("index", result=response.choices[0].text))
-
-    result = request.args.get("result")
-    # result = testDueDates
+    # result = request.args.get("result")
+    result = testDueDates
     return render_template("index.html", result=result)
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -161,8 +162,13 @@ def process_due_dates():
     
     
     for info in final_due_dates: 
-        date, task = info.split(': ')
-        addEvent(creds, date, task)
+        try:
+            date, task = info.split(': ', 1)
+            print(date, task)
+            # addEvent(creds, date, task)
+        except ValueError:
+            print(f"Error parsing line: {info}")
+            
     return "Due dates processed successfully"
 
 def addEvent(creds, date, description):

@@ -1,0 +1,77 @@
+body {
+    background-image: url('bg2.png');
+    background-size: cover; /* This ensures the image covers the entire background */
+    background-repeat: no-repeat; /* Prevents the background image from repeating */
+    
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    height: 100vh; /* Ensure the body takes up the full viewport height */
+    margin: 0; /* Remove default margin */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* style.css */
+#drop-area {
+    width: min(70vw, 70vh); /* Adjust the width and height as needed */
+    height: min(70vw, 70vh);
+    background-color: #F9FAF3; /* Background color */
+    border: 3.5px dashed #7079cd; 
+    border-radius: 50px; /* Rounded edges */
+    margin: 0 auto; /* Center horizontally */
+    text-align: center; /* Center text */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 20px; /* Padding inside the square */
+}
+
+.highlight {
+    border-color: #007bff;
+}
+
+#fileInputLabel {
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 100%;
+}
+#fileInputLabel div {
+    display: flex;
+    flex-direction: column; /* Stack the elements vertically */
+    align-items: center; /* Center horizontally */
+    position: relative;
+}
+
+/* Additional styling for the image (you can customize this) */
+#fileInputLabel img {
+    width: 100%; /* Adjust the width and height as needed */
+    height: 100%;
+    user-select: none; /* Prevent the image from being selectable */
+}
+#fileInputLabel p {
+    position: absolute;
+    bottom: 20%; /* Position the text 10% from the bottom */
+    left: 0; /* Align it to the left */
+    right: 0; /* Align it to the right */
+    text-align: center; /* Center the text */
+    margin: 0; /* Reset default margin */
+    user-select: none; /* Prevent the image from being selectable */
+}
+
+#homeLink {
+    position: absolute; /* Position the link absolutely within the parent */
+    top: 10px; /* Adjust the top distance as needed */
+    left: 10px; /* Adjust the left distance as needed */
+    z-index: 1; /* Ensure it's above other elements (if necessary) */
+    width: 12%;
+    height: 6%;
+    display:inline-block;
+}
+
+/* Additional styling for the image (you can customize this) */
+#homeLink img {
+    width: 100%; /* Adjust the width as needed */
+    height: 100%; /* Adjust the height as needed */
+}

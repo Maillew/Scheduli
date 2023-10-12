@@ -1,0 +1,97 @@
+body {
+    background-image: url('bg2.png');
+    background-size: cover; /* This ensures the image covers the entire background */
+    background-repeat: no-repeat; /* Prevents the background image from repeating */
+    
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-content: center;
+    height: 100vh; /* Ensure the body takes up the full viewport height */
+    margin: 0; /* Remove default margin */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* style.css */
+
+#homeLink {
+    position: absolute; /* Position the link absolutely within the parent */
+    top: 10px; /* Adjust the top distance as needed */
+    left: 10px; /* Adjust the left distance as needed */
+    z-index: 1; /* Ensure it's above other elements (if necessary) */
+    min-width: 100px;
+    width: 12%;
+    padding-bottom: 6%;
+    display:inline-block;
+}
+
+/* Additional styling for the image (you can customize this) */
+#homeLink img {
+    width: 100%; /* Adjust the width as needed */
+    height: 100%; /* Adjust the height as needed */
+}
+
+#schedule{
+    width: min(90vw, 90vh); /* Adjust the width and height as needed */
+    height: min(90vw, 90vh);
+    background-color: #F9FAF3; /* Background color */
+    border: 3.5px dashed #7079cd; 
+    border-radius: 50px; /* Rounded edges */
+    margin: auto; /* Center horizontally */
+    text-align: center; /* Center text */
+    justify-content: center; /* Center horizontally */
+    flex-direction: column;
+    padding-top: calc((100vh - min(90vw, 90vh)) / 2); 
+    padding-bottom: calc((100vh - min(90vw, 90vh)) / 2); 
+}
+#schedule h2{
+    font-size: 24px;
+    font-family: 'Poppins';
+}
+#h2Due {
+    margin-top: 0; 
+    text-decoration: underline;
+}
+
+#add-task-form{
+    padding-bottom: 20px;
+}
+#post-tasks-button{
+    background-color: #7079cd;
+    border: none;
+    border-style: none;
+    font-size: 18px;
+}
+.btn:focus{
+    border:none;
+    outline: none
+}
+#tasks-container{
+    margin-bottom: 20px;
+}
+#task{
+    font-size: 14px;
+}
+.task-row{
+    margin: 0.5%;
+}
+
+#add-task-form input[type="date"],
+#add-task-form input[type="text"] {
+    width: 30%;
+    padding: 7px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Style the submit button */
+#add-task-form input[type="submit"] {
+    background-color: #7079cd; /* Change to your desired button color */
+    color: #fff; /* Text color */
+    padding: 7px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}

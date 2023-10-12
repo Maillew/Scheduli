@@ -23,6 +23,8 @@ function loadTasksFromFlask(callback) {
         .then(data => {
             // Store the fetched data in session storage
             sessionStorage.setItem("due_dates", JSON.stringify(data));
+            let tasks = JSON.parse(sessionStorage.getItem("due_dates")) || [];
+            tasks.sort((a, b) => (a.date > b.date) ? 1 : -1);
             console.log("Flask data " + data.length)
             loadTasksFromSessionStorage();
         })

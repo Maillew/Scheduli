@@ -113,15 +113,17 @@ def upload_file():
 
     if file and file.filename.endswith('.pdf'):
         course_outline = compress_outline(pdf_to_string(file))
+        print(course_outline)
         print("Course Outline Generated")
-        # response = openai.Completion.create(
-        #     model="text-davinci-003",
-        #     prompt=generate_prompt(course_outline),
-        #     temperature=0.6,
-        #     max_tokens = 4096 - len(enc.encode(generate_prompt(course_outline)))
-        # )
-        # due_dates = response.choices[0].text
-        due_dates = testDueDates
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=generate_prompt(course_outline),
+            temperature=0.6,
+            max_tokens = 4096 - len(enc.encode(generate_prompt(course_outline)))
+        )
+        due_dates = response.choices[0].text
+        print(due_dates)
+        # due_dates = testDueDates
         lines = due_dates.strip().splitlines()
         lines.reverse()
         final_output_index = None
@@ -148,10 +150,6 @@ def upload_file():
             except ValueError:
                 print(f"Error parsing line: {info}")
         session['due_dates'] = final_output
-        response_data = {
-            'due_dates': final_output,
-            'url': url_for('result')
-        }
         return jsonify(url=url_for('result', processed_data=final_output))
     else:
         return "Please upload a PDF file"

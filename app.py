@@ -24,7 +24,7 @@ enc = tiktoken.get_encoding("p50k_base")
 enc = tiktoken.encoding_for_model('gpt-3.5-turbo-1106')
 
 app = Flask(__name__)
-openai.api_key = "API-KEY"
+openai.api_key = "OPEN_API_KEY"
 app.secret_key = secrets.token_hex(16)
 
 
@@ -115,7 +115,7 @@ def upload_file():
         course_outline = compress_outline(pdf_to_string(file))
         print(course_outline)
         print("Course Outline Generated")
-        response = openai.chat.completion.create(
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages = [
                 {"role": "user", "content": generate_prompt(course_outline)}

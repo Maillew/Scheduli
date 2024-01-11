@@ -21,10 +21,10 @@ app = Flask(__name__, static_url_path='/static', static_folder='static')
 
 
 enc = tiktoken.get_encoding("p50k_base")
-enc = tiktoken.encoding_for_model('text-davinci-003')
+enc = tiktoken.encoding_for_model('gpt-3.5-turbo-1106')
 
 app = Flask(__name__)
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = "API-KEY"
 app.secret_key = secrets.token_hex(16)
 
 
@@ -115,13 +115,14 @@ def upload_file():
         course_outline = compress_outline(pdf_to_string(file))
         print(course_outline)
         print("Course Outline Generated")
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=generate_prompt(course_outline),
-            temperature=0.6,
-            max_tokens = 4096 - len(enc.encode(generate_prompt(course_outline)))
+        response = openai.chat.completion.create(
+            model="gpt-3.5-turbo",
+            messages = [
+                {"role": "user", "content": generate_prompt(course_outline)}
+            ]
         )
-        due_dates = response.choices[0].text
+        print(response)
+        due_dates = response.choices[0].message.content
         print(due_dates)
         # due_dates = testDueDates
         lines = due_dates.strip().splitlines()
@@ -219,4 +220,4 @@ def addEvent(creds, date, description):
         print('An error occurred: %s' % error)
         
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=9999)
